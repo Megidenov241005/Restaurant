@@ -5,7 +5,7 @@ from .views import *
 
 
 urlpatterns = [
-    path('', main, name = 'main'),
+    path('', main_view, name = 'main'),
     path('reserve/time/', choose_time, name='reserve_table'),
     path('reserve/final/', finalize_reserve, name='finalize_reserve'),
     # path('my_reserves', my_reserves, name = 'my_reserves'),

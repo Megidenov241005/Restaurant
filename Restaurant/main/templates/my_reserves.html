@@ -1,0 +1,18 @@
+{% extends 'pattern.html' %}
+{% block content %}
+<h1>Мои резервы</h1>
+
+{% if reserves %}
+    <ul>
+        {% for r in reserves %}
+            <li>
+                Столик №{{ r.table.id }} ({{ r.table.seats }} мест)<br>
+                С: {{ r.start|date:"d.m.Y H:i" }} — По: {{ r.end|date:"d.m.Y H:i" }}
+            </li>
+            <hr>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>У вас пока нет активных броней.</p>
+{% endif %}
+{% endblock %}

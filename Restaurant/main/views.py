@@ -10,8 +10,19 @@ from django.db.models import Q
 
 
 # Create your views here.
-def main(request):
-    return render(request, 'pattern.html')
+# def main(request):
+#     return render(request, 'pattern.html')
+
+def main_view(request):
+    if not request.user.is_authenticated:
+        return render(request, 'welcome.html')
+
+    if request.user.is_staff:
+        reserves = Reserve.objects.filter(end__gte=timezone.now()).select_related('table', 'owner')
+        return render(request, 'admin_reserves.html', {'reserves': reserves})
+
+    reserves = Reserve.objects.filter(owner=request.user).order_by('start')
+    return render(request, 'my_reserves.html', {'reserves': reserves})
 
 def login_view(request):
     if request.method == 'POST':
