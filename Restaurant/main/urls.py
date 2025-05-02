@@ -6,7 +6,8 @@ from .views import *
 
 urlpatterns = [
     path('', main, name = 'main'),
-    # path('reserve_table/', reserve_table, name = 'reserve_table'),
+    path('reserve/time/', choose_time, name='reserve_table'),
+    path('reserve/final/', finalize_reserve, name='finalize_reserve'),
     # path('my_reserves', my_reserves, name = 'my_reserves'),
     path('logout', logout_view, name = 'logout'),
     path('login', login_view, name = 'login'),

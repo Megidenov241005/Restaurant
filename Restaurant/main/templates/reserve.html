@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Зарезервировать столик</title>
+</head>
+<body>
+    <h1>Зарезервировать столик</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+
+        <p>
+            {{ form.table.label_tag }}<br>
+            {{ form.table }}
+            {% if form.table.errors %}
+                <span style="color:red">{{ form.table.errors.0 }}</span>
+            {% endif %}
+        </p>
+
+        <p>
+            {{ form.start.label_tag }}<br>
+            {{ form.start }}
+            {% if form.start.errors %}
+                <span style="color:red">{{ form.start.errors.0 }}</span>
+            {% endif %}
+        </p>
+
+        <p>
+            {{ form.end.label_tag }}<br>
+            {{ form.end }}
+            {% if form.end.errors %}
+                <span style="color:red">{{ form.end.errors.0 }}</span>
+            {% endif %}
+        </p>
+
+        <button type="submit">Зарезервировать</button>
+    </form>
+</body>
+</html>

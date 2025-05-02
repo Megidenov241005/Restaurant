@@ -1,0 +1,19 @@
+<h1>Выберите время</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+
+    <p>
+        {{ form.start.label_tag }}<br>
+        {{ form.start }}
+        {% if form.start.errors %}<br><span style="color:red">{{ form.start.errors.0 }}</span>{% endif %}
+    </p>
+
+    <p>
+        {{ form.end.label_tag }}<br>
+        {{ form.end }}
+        {% if form.end.errors %}<br><span style="color:red">{{ form.end.errors.0 }}</span>{% endif %}
+    </p>
+
+    <button type="submit">Показать свободные столики</button>
+</form>

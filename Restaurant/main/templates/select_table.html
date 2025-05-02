@@ -1,0 +1,20 @@
+<h1>Свободные столики</h1>
+
+{% if tables %}
+    <form method="post" action="{% url 'finalize_reserve' %}">
+        {% csrf_token %}
+        <input type="hidden" name="start" value="{{ start|date:'c' }}">
+        <input type="hidden" name="end" value="{{ end|date:'c' }}">
+
+        <label for="table">Выберите столик:</label>
+        <select name="table" required>
+            {% for table in tables %}
+                <option value="{{ table.id }}">Столик №{{ table.id }} — {{ table.seats }} мест</option>
+            {% endfor %}
+        </select>
+
+        <button type="submit">Зарезервировать</button>
+    </form>
+{% else %}
+    <p>К сожалению, все столики заняты в это время.</p>
+{% endif %}
