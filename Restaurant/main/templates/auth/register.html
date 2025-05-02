@@ -1,46 +1,48 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <title>Регистрация</title>
-</head>
-<body>
-    <h1>Регистрация</h1>
-    <form method="post">
-        {% csrf_token %}
+{% extends 'pattern.html' %}
+{% block title %}Регистрация{% endblock %}
 
-        {% if form.non_field_errors %}
-            <div style="color: red;">
-                {{ form.non_field_errors }}
-            </div>
-        {% endif %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card p-4">
+            <h2 class="mb-4 text-center">Регистрация</h2>
 
-        <p>
-            <label for="{{ form.username.id_for_label }}">Имя пользователя:</label><br>
-            {{ form.username }}
-            {% if form.username.errors %}
-                <span style="color:red;">{{ form.username.errors.0 }}</span>
-            {% endif %}
-        </p>
+            <form method="post">
+                {% csrf_token %}
 
-        <p>
-            <label for="{{ form.password1.id_for_label }}">Пароль:</label><br>
-            {{ form.password1 }}
-            {% if form.password1.errors %}
-                <span style="color:red;">{{ form.password1.errors.0 }}</span>
-            {% endif %}
-        </p>
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {{ form.non_field_errors }}
+                    </div>
+                {% endif %}
 
-        <p>
-            <label for="{{ form.password2.id_for_label }}">Подтвердите пароль:</label><br>
-            {{ form.password2 }}
-            {% if form.password2.errors %}
-            <br><br>
-                <span style="color:red;">{{ form.password2.errors.0 }}</span>
-            {% endif %}
-        </p>
+                <div class="mb-3">
+                    <label for="id_username" class="form-label">Имя пользователя</label>
+                    {{ form.username }}
+                    {% if form.username.errors %}
+                        <div class="text-danger small mt-1">{{ form.username.errors.0 }}</div>
+                    {% endif %}
+                </div>
 
-        <button type="submit">Зарегистрироваться</button>
-    </form>
-</body>
-</html>
+                <div class="mb-3">
+                    <label for="id_password1" class="form-label">Пароль</label>
+                    {{ form.password1 }}
+                    {% if form.password1.errors %}
+                        <div class="text-danger small mt-1">{{ form.password1.errors.0 }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    <label for="id_password2" class="form-label">Подтвердите пароль</label>
+                    {{ form.password2 }}
+                    {% if form.password2.errors %}
+                        <div class="text-danger small mt-1">{{ form.password2.errors.0 }}</div>
+                    {% endif %}
+                </div>
+
+                <button type="submit" class="btn btn-success w-100">Зарегистрироваться</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

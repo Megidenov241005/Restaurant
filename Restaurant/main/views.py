@@ -1,27 +1,64 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect,get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib import messages
 from .forms import *
 from .models import *
 from django.db.models import Q
 
 
-# Create your views here.
-# def main(request):
-#     return render(request, 'pattern.html')
+@staff_member_required
+def add_table(request):
+    if request.method == 'POST':
+        form = TableForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('edit_tables')  # после добавления — назад к списку
+    else:
+        form = TableForm()
+    
+    return render(request, 'add_table.html', {'form': form})
+
+@staff_member_required
+def edit_tables(request):
+    tables = Table.objects.all()
+    return render(request, 'edit_tables.html', {'tables': tables})
+
+@staff_member_required
+def edit_table(request, table_id):
+    table = get_object_or_404(Table, id=table_id)
+
+    if request.method == 'POST':
+        form = TableForm(request.POST, instance=table)
+        if form.is_valid():
+            form.save()
+            return redirect('edit_tables')
+    else:
+        form = TableForm(instance=table)
+
+    return render(request, 'edit_table.html', {'form': form, 'table': table})
+
+@staff_member_required
+def delete_table(request, table_id):
+    table = get_object_or_404(Table, id=table_id)
+    table.delete()
+    return redirect('edit_tables')
 
 def main_view(request):
     if not request.user.is_authenticated:
         return render(request, 'welcome.html')
-
+ 
     if request.user.is_staff:
-        reserves = Reserve.objects.filter(end__gte=timezone.now()).select_related('table', 'owner')
+        reserves = Reserve.objects.filter(end__gte=timezone.now()) \
+                              .select_related('table', 'owner') \
+                              .order_by('start')  # сортировка по дате начала
         return render(request, 'admin_reserves.html', {'reserves': reserves})
 
-    reserves = Reserve.objects.filter(owner=request.user).order_by('start')
+
+    reserves = Reserve.objects.filter(owner=request.user).order_by('-start')
     return render(request, 'my_reserves.html', {'reserves': reserves})
 
 def login_view(request):

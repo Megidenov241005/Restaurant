@@ -1,5 +1,7 @@
 {% extends 'pattern.html' %}
 {% block content %}
+<a href="{% url 'edit_tables' %}" class="btn">Изменить столы</a>
+
 <h1>Активные брони клиентов</h1>
 
 {% if reserves %}

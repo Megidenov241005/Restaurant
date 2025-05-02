@@ -1,0 +1,12 @@
+{% extends 'pattern.html' %}
+{% block content %}
+<h1>Добавить столик</h1>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Сохранить</button>
+</form>
+
+<a href="{% url 'edit_tables' %}">Назад</a>
+{% endblock %}

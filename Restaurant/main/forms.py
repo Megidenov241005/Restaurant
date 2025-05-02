@@ -1,6 +1,6 @@
 from django import forms
 from django.utils import timezone
-from .models import Reserve
+from .models import *
 
 class ReserveTimeForm(forms.Form):
     start = forms.DateTimeField(widget=forms.DateTimeInput(attrs={'type': 'datetime-local'}))
@@ -16,3 +16,9 @@ class ReserveTimeForm(forms.Form):
 
         if start and end and end <= start:
             self.add_error('end', 'Время окончания должно быть позже начала.')
+
+class TableForm(forms.ModelForm):
+    class Meta:
+        model = Table
+        fields = ['seats']
+        labels = {'seats': 'Количество мест'}

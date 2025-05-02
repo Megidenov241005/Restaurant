@@ -1,0 +1,18 @@
+{% extends 'pattern.html' %}
+{% block content %}
+<h1>Редактировать столики</h1>
+
+<ul>
+    {% for table in tables %}
+        <li>
+            Столик №{{ table.id }} — {{ table.seats }} мест
+            |
+            <a href="{% url 'edit_table' table.id %}">Редактировать</a>
+            |
+            <a href="{% url 'delete_table' table.id %}" style="color:red;" onclick="return confirm('Удалить столик?')">Удалить</a>
+        </li>
+    {% endfor %}
+</ul>
+
+<a href="{% url 'add_table' %}" class="btn">Добавить столик</a>
+{% endblock %}

@@ -1,20 +1,35 @@
-<h1>Свободные столики</h1>
+{% extends 'pattern.html' %}
+{% block title %}Свободные столики{% endblock %}
 
-{% if tables %}
-    <form method="post" action="{% url 'finalize_reserve' %}">
-        {% csrf_token %}
-        <input type="hidden" name="start" value="{{ start|date:'c' }}">
-        <input type="hidden" name="end" value="{{ end|date:'c' }}">
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card p-4">
+            <h2 class="mb-4 text-center">Свободные столики</h2>
 
-        <label for="table">Выберите столик:</label>
-        <select name="table" required>
-            {% for table in tables %}
-                <option value="{{ table.id }}">Столик №{{ table.id }} — {{ table.seats }} мест</option>
-            {% endfor %}
-        </select>
+            {% if tables %}
+                <form method="post" action="{% url 'finalize_reserve' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="start" value="{{ start|date:'c' }}">
+                    <input type="hidden" name="end" value="{{ end|date:'c' }}">
 
-        <button type="submit">Зарезервировать</button>
-    </form>
-{% else %}
-    <p>К сожалению, все столики заняты в это время.</p>
-{% endif %}
+                    <div class="mb-3">
+                        <label for="table" class="form-label">Выберите столик:</label>
+                        <select name="table" id="table" class="form-select" required>
+                            {% for table in tables %}
+                                <option value="{{ table.id }}">Столик №{{ table.id }} — {{ table.seats }} мест</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-success w-100">Зарезервировать</button>
+                </form>
+            {% else %}
+                <div class="alert alert-warning text-center">
+                    К сожалению, все столики заняты в это время.
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
