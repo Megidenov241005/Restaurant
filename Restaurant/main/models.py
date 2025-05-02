@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.conf import settings
 
 
 
@@ -24,7 +25,9 @@ class Table(models.Model):
 
 class Reserve(models.Model):
     table = models.ForeignKey(Table, on_delete=models.PROTECT, related_name="reserves")
-    datetime = models.DateTimeField()
+    start = models.DateTimeField(null=True)
+    end = models.DateTimeField(null=True)
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return f"Reservation for Table #{self.table.id} at {self.datetime}"
