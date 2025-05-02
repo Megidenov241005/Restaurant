@@ -1,3 +1,5 @@
+from django.conf import settings
+from django.conf.urls.static import static
 from django.urls import path
 from .views import *
 
@@ -9,4 +11,4 @@ urlpatterns = [
     path('logout', logout_view, name = 'logout'),
     path('login', login_view, name = 'login'),
     path('register/', register_view, name = 'register'),
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
