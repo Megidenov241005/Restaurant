@@ -16,7 +16,7 @@ def add_table(request):
         form = TableForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('edit_tables')  # после добавления — назад к списку
+            return redirect('edit_tables')
     else:
         form = TableForm()
     
@@ -58,7 +58,7 @@ def main_view(request):
         return render(request, 'admin_reserves.html', {'reserves': reserves})
 
 
-    reserves = Reserve.objects.filter(owner=request.user).order_by('-start')
+    reserves = Reserve.objects.filter(owner=request.user).order_by('start')
     return render(request, 'my_reserves.html', {'reserves': reserves})
 
 def login_view(request):
@@ -133,16 +133,3 @@ def finalize_reserve(request):
             owner=request.user
         )
         return redirect('main')
-
-# @login_required
-# def reserve_table(request):
-#     if request.method == 'POST':
-#         form = ReserveForm(request.POST)
-#         if form.is_valid():
-#             reserve = form.save(commit=False)
-#             reserve.owner = request.user
-#             reserve.save()
-#             return redirect('my_reserves')
-#     else:
-#         form = ReserveForm()
-#     return render(request, 'reserve.html', {'form': form})
