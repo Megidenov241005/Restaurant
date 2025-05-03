@@ -2,17 +2,15 @@
 {% block content %}
 <h1>Редактировать столики</h1>
 
-<ul>
+<dl>
     {% for table in tables %}
-        <li>
-            Столик №{{ table.id }} — {{ table.seats }} мест
-            |
-            <a href="{% url 'edit_table' table.id %}">Редактировать</a>
-            |
-            <a href="{% url 'delete_table' table.id %}" style="color:red;" onclick="return confirm('Удалить столик?')">Удалить</a>
-        </li>
+        <dd style="font-size: 24px;margin-bottom: 24px;">
+            <p style="margin: 0;">Столик №{{ table.id }} — {{ table.seats }} мест</p>
+            <a href="{% url 'edit_table' table.id %}" class="btn btn-outline-primary">Редактировать</a>
+            <a href="{% url 'delete_table' table.id %}" class="btn btn-outline-danger" onclick="return confirm('Удалить столик?')">Удалить</a>
+        </dd>
     {% endfor %}
-</ul>
+</dl>
 
-<a href="{% url 'add_table' %}" class="btn">Добавить столик</a>
+<a href="{% url 'add_table' %}" class="btn btn-outline-custom">Добавить столик</a>
 {% endblock %}
